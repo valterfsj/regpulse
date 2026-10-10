@@ -1,5 +1,5 @@
 from typing import Protocol
-from .main import RegulatoryDocument, Source
+from .sources import RegulatoryDocument, Source
 from datetime import UTC, datetime
 
 class Collector(Protocol):
@@ -12,6 +12,7 @@ class InMemoryCollector:
             raise ValueError("Source is not active")
         document = RegulatoryDocument(
             source_id=source.identifier,
+            document_id="doc-123",
             title="Example Document",
             document_type="portaria",
             official_reference="BR-123",

@@ -1,4 +1,4 @@
-from src.main import Source
+from src.sources import Source
 import pytest
 from pydantic import ValidationError
 

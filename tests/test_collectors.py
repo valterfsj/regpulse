@@ -1,7 +1,7 @@
 from datetime import date, datetime, UTC
 import pytest
 from src.collectors import InMemoryCollector
-from src.main import Source, RegulatoryDocument
+from src.sources import Source, RegulatoryDocument
 from test_source import make_source_data
 
 def test_in_memory_collector_active_source():

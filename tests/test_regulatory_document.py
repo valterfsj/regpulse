@@ -1,4 +1,4 @@
-from src.main import RegulatoryDocument
+from src.sources import RegulatoryDocument
 import pytest
 from pydantic import ValidationError
 from datetime import UTC, datetime, date
@@ -6,6 +6,7 @@ from datetime import UTC, datetime, date
 def make_regulatory_document_data(**overrides):
     data = {
         "source_id": "id",
+        "document_id": "doc-123",
         "title": "Exemplo de Documento",
         "document_type": "portaria",
         "official_reference": "BR-123",
@@ -28,10 +29,17 @@ def test_happy_path():
     assert doc.content_hash == "abc123"
     assert doc.published_at is not None
     assert doc.collected_at is not None
+    assert doc.document_id == "doc-123"
 
 def test_missing_required_field():
     data = make_regulatory_document_data()
     del data["source_id"]
+    with pytest.raises(ValidationError):
+        RegulatoryDocument(**data)
+
+def test_missing_document_id():
+    data = make_regulatory_document_data()
+    del data["document_id"]
     with pytest.raises(ValidationError):
         RegulatoryDocument(**data)
 
